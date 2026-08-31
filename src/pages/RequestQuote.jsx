@@ -86,12 +86,12 @@ export default function RequestQuote() {
                   </svg>
                 </div>
                 <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: 12 }}>
-                  {lang === 'ar' ? 'تم إرسال طلبك!' : 'Request Sent!'}
+                  {lang === 'ar' ? 'تم تجهيز طلبك!' : 'Request Prepared!'}
                 </h2>
                 <p style={{ color: 'var(--color-text-secondary)', marginBottom: 28 }}>
                   {lang === 'ar'
-                    ? 'شكرًا لتواصلك مع فوريو باك. سنرد عليك في أقرب وقت ممكن.'
-                    : 'Thank you for contacting ForYouPack. We\'ll get back to you as soon as possible.'}
+                    ? 'يرجى إرسال الرسالة عبر واتساب لإتمام طلبك. سنرد عليك في أقرب وقت ممكن.'
+                    : 'Please send the message via WhatsApp to complete your inquiry. We\'ll get back to you as soon as possible.'}
                 </p>
                 <Link to="/" className="btn btn--primary">
                   {lang === 'ar' ? 'العودة للرئيسية' : 'Back to Home'}

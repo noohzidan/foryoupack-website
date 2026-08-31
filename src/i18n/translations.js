@@ -1,16 +1,16 @@
 /**
- * ForYouPack — Translations (AR / EN)
+ * For You Carton — Translations (AR / EN)
  * Single source of truth for all bilingual text.
  */
 
 const translations = {
   en: {
     /* Meta */
-    pageTitle:         'ForYouPack — The Right Box, At The Right Time | Industrial Packaging',
-    metaDesc:          'ForYouPack is a leading Egyptian manufacturer of corrugated cardboard cartons for industrial packaging. Serving food, water, agriculture, glass, oil, and cookware industries since 2017.',
+    pageTitle:         'For You Carton — The Right Box, At The Right Time | Industrial Packaging',
+    metaDesc:          'For You Carton Company is a leading Egyptian manufacturer of corrugated cardboard cartons for industrial packaging. Serving food, water, agriculture, glass, oil, and cookware industries since 2017.',
 
     /* Logo */
-    logoName:          'ForYouPack',
+    logoName:          'For You Carton',
     logoTagline:       'Industrial Packaging',
 
     /* Navigation */
@@ -40,7 +40,7 @@ const translations = {
     heroBadge:         'Est. 2017 · Sadat City, Egypt',
     heroHeadline1:     'The Right Box,',
     heroHeadline2:     'At the Right Time',
-    heroTaglineName:   'ForYouPack',
+    heroTaglineName:   'For You Carton',
     heroTagline:       '… The Right Box… At The Right Time',
     heroDesc:          'Leading manufacturer of corrugated cardboard cartons for industrial packaging. Trusted by food, water, agriculture, glass, oil, and cookware industries across Egypt.',
     heroCta1:          'Request a Quote',
@@ -63,7 +63,7 @@ const translations = {
     feat4Desc:         'Dedicated to factory and industrial partners',
 
     /* Hero image */
-    heroImgAlt:        '[Image: Factory exterior — ForYouPack production facility]',
+    heroImgAlt:        '[Image: Factory exterior — For You Carton production facility]',
     heroCard1Value:    '9+ Years',
     heroCard1Desc:     'Manufacturing Experience',
     heroCard2Value:    'ISO Ready',
@@ -72,7 +72,7 @@ const translations = {
     /* About */
     aboutBadge:        'Est. 2017 · 9 Years of Experience',
     aboutTitle:        'Your Industrial Packaging Partner Since 2017',
-    aboutLead:         "ForYouPack is an Egyptian Limited Liability Company (LLC) specializing in the manufacture of corrugated cardboard cartons for various industries, with over 9 years of experience in Sadat City's industrial zone.",
+    aboutLead:         "For You Carton Company is an Egyptian Limited Liability Company (LLC) specializing in the manufacture of corrugated cardboard cartons for various industries, with over 9 years of experience in Sadat City's industrial zone.",
     aboutBody:         'We believe quality packaging is the foundation of product protection and safe delivery to the customer. We use the latest production lines and finest raw materials to deliver products meeting the high industrial specifications required by our factory and corporate clients.',
     aboutH1Title:      'Location',
     aboutH1Desc:       '6th Industrial Zone, Sadat City',
@@ -87,7 +87,7 @@ const translations = {
     aboutStat1Lbl:     'Years of Experience',
     aboutStat2Num:     '6+',
     aboutStat2Lbl:     'Industries Served',
-    aboutImgLabel:     '[Image: Factory exterior — ForYouPack production facility, Sadat City]',
+    aboutImgLabel:     '[Image: Factory exterior — For You Carton production facility, Sadat City]',
 
     /* Products */
     productsEyebrow:   'Our Products',
@@ -212,14 +212,20 @@ const translations = {
     backToHome:        '← Back to Home',
 
     /* Footer */
-    footerDesc:        'ForYouPack LLC — A leading Egyptian manufacturer of corrugated cardboard cartons for various industries since 2017. Sadat City, Menofia, Egypt.',
+    footerDesc:        'For You Carton Company LLC — A leading Egyptian manufacturer of corrugated cardboard cartons for various industries since 2017. Sadat City, Menofia, Egypt.',
     footerNavTitle:    'Quick Links',
     footerContactTitle:'Contact',
     footerLocationTitle:'Location',
     footerAddress:     'Plot 2/6276\n6th Industrial Zone\nSadat City, Menofia\nEgypt',
-    footerCopyright:   '© 2026 ForYouPack — فوريو باك LLC. All rights reserved · جميع الحقوق محفوظة.',
+    footerCopyright:   '© 2026 For You Carton — فوريو للكرتون LLC. All rights reserved · جميع الحقوق محفوظة.',
     footerPrivacy:     'Privacy Policy',
     footerTerms:       'Terms & Conditions',
+
+    /* Clients & Partners */
+    clientsEyebrow:    'Our Clients',
+    clientsTitle:      'Our Clients & Partners',
+    clientsSubtitle:   "Trusted by leading companies across Egypt's food, water, agriculture, glass, oil, and cookware industries.",
+    clientsAriaLabel:  'Client and partner logos',
 
     /* Shared UI */
     footerWaPrefix:    'WhatsApp:',
@@ -228,11 +234,11 @@ const translations = {
 
   ar: {
     /* Meta */
-    pageTitle:         'فوريو باك — الصندوق الصح في الوقت الصح | كراتين تغليف صناعية',
-    metaDesc:          'فوريو باك شركة مصرية رائدة في تصنيع كراتين التغليف المموج للتعبئة الصناعية. نخدم صناعات الغذاء والمياه والزراعة والزجاج والزيوت وأواني الطهي منذ عام 2017.',
+    pageTitle:         'فوريو للكرتون — الصندوق الصح في الوقت الصح | كراتين تغليف صناعية',
+    metaDesc:          'فوريو للكرتون شركة مصرية رائدة في تصنيع كراتين التغليف المموج للتعبئة الصناعية. نخدم صناعات الغذاء والمياه والزراعة والزجاج والزيوت وأواني الطهي منذ عام 2017.',
 
     /* Logo */
-    logoName:          'فوريو باك',
+    logoName:          'فوريو للكرتون',
     logoTagline:       'تغليف صناعي',
 
     /* Navigation */
@@ -262,7 +268,7 @@ const translations = {
     heroBadge:         'تأسست 2017 · مدينة السادات، مصر',
     heroHeadline1:     'الصندوق الصح...',
     heroHeadline2:     'في الوقت الصح',
-    heroTaglineName:   'فوريو باك',
+    heroTaglineName:   'فوريو للكرتون',
     heroTagline:       '... الصندوق الصح... في الوقت الصح',
     heroDesc:          'شركة رائدة في تصنيع كراتين التغليف المموج للتغليف الصناعي. موثوق بها من قِبل مصانع الغذاء والمياه والزراعة والزجاج والزيوت وأواني الطهي في جميع أنحاء مصر.',
     heroCta1:          'اطلب عرض سعر',
@@ -285,7 +291,7 @@ const translations = {
     feat4Desc:         'متخصصون في خدمة المصانع والشركاء الصناعيين',
 
     /* Hero image */
-    heroImgAlt:        '[صورة: المصنع — مرفق إنتاج فوريو باك]',
+    heroImgAlt:        '[صورة: المصنع — مرفق إنتاج فوريو للكرتون]',
     heroCard1Value:    '+9 سنوات',
     heroCard1Desc:     'خبرة في التصنيع',
     heroCard2Value:    'جاهز للمعايير',
@@ -294,7 +300,7 @@ const translations = {
     /* About */
     aboutBadge:        'تأسست عام 2017 · 9 سنوات خبرة',
     aboutTitle:        'شركاؤكم في التغليف الصناعي منذ 2017',
-    aboutLead:         'فوريو باك شركة مصرية ذات مسئولية محدودة متخصصة في تصنيع كراتين التغليف المموج للصناعات المختلفة، بخبرة تمتد لأكثر من 9 سنوات في قلب المنطقة الصناعية بمدينة السادات.',
+    aboutLead:         'فوريو للكرتون شركة مصرية ذات مسئولية محدودة متخصصة في تصنيع كراتين التغليف المموج للصناعات المختلفة، بخبرة تمتد لأكثر من 9 سنوات في قلب المنطقة الصناعية بمدينة السادات.',
     aboutBody:         'نؤمن بأن التغليف الجيد هو أساس حماية المنتج ووصوله سليمًا إلى العميل. لذلك نستخدم أحدث خطوط الإنتاج وأجود الخامات لتقديم منتجات تلبي المواصفات الصناعية العالية التي يحتاجها عملاؤنا من المصانع والشركات الكبرى.',
     aboutH1Title:      'الموقع',
     aboutH1Desc:       'المنطقة الصناعية السادسة، مدينة السادات',
@@ -309,7 +315,7 @@ const translations = {
     aboutStat1Lbl:     'سنوات من الخبرة',
     aboutStat2Num:     '6+',
     aboutStat2Lbl:     'صناعات نخدمها',
-    aboutImgLabel:     '[صورة: مبنى المصنع — مرفق إنتاج فوريو باك، مدينة السادات]',
+    aboutImgLabel:     '[صورة: مبنى المصنع — مرفق إنتاج فوريو للكرتون، مدينة السادات]',
 
     /* Products */
     productsEyebrow:   'منتجاتنا',
@@ -434,14 +440,20 @@ const translations = {
     backToHome:        '→ العودة للرئيسية',
 
     /* Footer */
-    footerDesc:        'فوريو باك ذات مسئولية محدودة — شركة رائدة في تصنيع كراتين التغليف المموج للصناعات المصرية منذ 2017. مدينة السادات، المنوفية، مصر.',
+    footerDesc:        'فوريو للكرتون ذات مسئولية محدودة — شركة رائدة في تصنيع كراتين التغليف المموج للصناعات المصرية منذ 2017. مدينة السادات، المنوفية، مصر.',
     footerNavTitle:    'روابط سريعة',
     footerContactTitle:'تواصل معنا',
     footerLocationTitle:'الموقع',
     footerAddress:     'قطعة 2/6276\nالمنطقة الصناعية السادسة\nمدينة السادات، المنوفية\nمصر',
-    footerCopyright:   '© 2026 ForYouPack — فوريو باك ذات مسئولية محدودة. جميع الحقوق محفوظة · All rights reserved.',
+    footerCopyright:   '© 2026 For You Carton — فوريو للكرتون ذات مسئولية محدودة. جميع الحقوق محفوظة · All rights reserved.',
     footerPrivacy:     'سياسة الخصوصية',
     footerTerms:       'الشروط والأحكام',
+
+    /* Clients & Partners */
+    clientsEyebrow:    'عملاؤنا',
+    clientsTitle:      'عملاؤنا وشركاؤنا',
+    clientsSubtitle:   'موثوق بنا من قِبل كبرى الشركات في قطاعات الغذاء والمياه والزراعة والزجاج والزيوت وأواني الطهي في مصر.',
+    clientsAriaLabel:  'شعارات العملاء والشركاء',
 
     /* Shared UI */
     footerWaPrefix:    'واتساب:',

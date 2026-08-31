@@ -156,9 +156,19 @@ export default function Header() {
         <div className="container">
           <div className="header__inner">
 
-            {/* Logo */}
-            <Link to="/" className="logo" aria-label="ForYouPack — Home">
-              <div className="logo__mark" aria-hidden="true" />
+            {/* Logo — real image */}
+            <Link to="/" className="logo" aria-label={isRTL ? 'فوريو للكرتون — الرئيسية' : 'For You Carton — Home'}>
+              <div className="logo__img-wrap" aria-hidden="true">
+                <img
+                  src="/images/logo/logo.jpg"
+                  alt={isRTL ? 'شعار شركة فوريو للكرتون' : 'For You Carton Company Logo'}
+                  className="logo__img"
+                  width="44"
+                  height="44"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
               <div className="logo__text">
                 <span className="logo__name">{t('logoName')}</span>
                 <span className="logo__tagline">{t('logoTagline')}</span>

@@ -1,5 +1,5 @@
 /* =========================================================
-   ForYouPack — Main Stylesheet (React version)
+   For You Carton — Main Stylesheet (React version)
    Ported from static CSS — all design tokens preserved
    ========================================================= */
 
@@ -375,40 +375,27 @@ body[lang="ar"] .section-eyebrow { letter-spacing: 0; }
   text-decoration: none;
 }
 
-.logo__mark {
-  width: 40px;
-  height: 40px;
-  background: var(--color-primary);
+/* Image container — white pill holds the JPEG (white bg) cleanly on any theme */
+.logo__img-wrap {
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  position: relative;
   overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  padding: 3px;
 }
 
-.logo__mark::before {
-  content: '';
-  position: absolute;
-  width: 22px;
-  height: 14px;
-  border: 2.5px solid #FFFFFF;
-  border-radius: 2px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.logo__mark::after {
-  content: '';
-  position: absolute;
-  width: 14px;
-  height: 2.5px;
-  background: #FFFFFF;
-  top: calc(50% + 7px);
-  left: 50%;
-  transform: translateX(-50%);
+.logo__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
 }
 
 .logo__text { display: flex; flex-direction: column; line-height: 1; }
@@ -1142,8 +1129,27 @@ html[dir="rtl"] .hero__card--2 { right: auto; left: -24px; }
 /* =========================================================
    THEME TRANSITION
    ========================================================= */
-.theme-transitioning * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 0.35s ease,
+              color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.35s ease,
+              fill 0.35s ease,
+              stroke 0.35s ease !important;
+}
+
+/* =========================================================
+   LANGUAGE TRANSITION
+   ========================================================= */
+.lang-transitioning {
+  opacity: 0;
+  transition: opacity 0.18s ease-out !important;
+}
+.lang-transition-in {
+  opacity: 1;
+  transition: opacity 0.18s ease-in !important;
 }
 
 /* =========================================================
@@ -1176,8 +1182,8 @@ html[dir="rtl"] .hero__card--2 { right: auto; left: -24px; }
    ========================================================= */
 .whatsapp-float {
   position: fixed;
-  bottom: 88px;
-  right: 24px;
+  bottom: 68px;
+  right: 18px;
   z-index: 900;
   display: flex;
   flex-direction: column;
@@ -1187,12 +1193,12 @@ html[dir="rtl"] .hero__card--2 { right: auto; left: -24px; }
 
 html[dir="rtl"] .whatsapp-float {
   right: auto;
-  left: 24px;
+  left: 18px;
   align-items: flex-start;
 }
 
 .whatsapp-float__btn {
-  width: 56px; height: 56px;
+  width: 52px; height: 52px;
   background: #25D366;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -1214,12 +1220,12 @@ html[dir="rtl"] .whatsapp-float {
   box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
 }
 
-.whatsapp-float__btn svg { width: 28px; height: 28px; }
+.whatsapp-float__btn svg { width: 26px; height: 26px; }
 
 .whatsapp-float__btn::before {
   content: '';
   position: absolute;
-  width: 56px; height: 56px;
+  width: 52px; height: 52px;
   border-radius: 50%;
   background: rgba(37, 211, 102, 0.3);
   animation: waPulse 2.5s ease-out infinite;
@@ -1259,10 +1265,10 @@ html[dir="rtl"] .whatsapp-float__tooltip { transform: translateX(-8px); }
    ========================================================= */
 .back-to-top {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 18px;
+  right: 18px;
   z-index: 900;
-  width: 44px; height: 44px;
+  width: 42px; height: 42px;
   background: var(--color-primary);
   color: #FFFFFF;
   border: none;
@@ -1276,7 +1282,7 @@ html[dir="rtl"] .whatsapp-float__tooltip { transform: translateX(-8px); }
   transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
 }
 
-html[dir="rtl"] .back-to-top { right: auto; left: 24px; }
+html[dir="rtl"] .back-to-top { right: auto; left: 18px; }
 
 .back-to-top.visible {
   opacity: 1;
@@ -1313,10 +1319,10 @@ html[dir="rtl"] .back-to-top { right: auto; left: 24px; }
   .features-strip__grid { grid-template-columns: 1fr 1fr; }
   .section-header { margin-bottom: 40px; }
 
-  .whatsapp-float { bottom: 80px; right: 16px; }
-  html[dir="rtl"] .whatsapp-float { left: 16px; }
-  .back-to-top { bottom: 16px; right: 16px; }
-  html[dir="rtl"] .back-to-top { left: 16px; }
+  .whatsapp-float { bottom: 66px; right: 14px; }
+  html[dir="rtl"] .whatsapp-float { left: 14px; }
+  .back-to-top { bottom: 14px; right: 14px; }
+  html[dir="rtl"] .back-to-top { left: 14px; }
 }
 
 @media (max-width: 480px) {

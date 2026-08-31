@@ -1,5 +1,5 @@
 /* =========================================================
-   ForYouPack — sections.css (React version)
+   For You Carton — sections.css (React version)
    About, Products, Industries, Specs, Contact, Footer
    ========================================================= */
 
@@ -882,33 +882,23 @@ html[dir="rtl"] .form-select {
   text-decoration: none;
 }
 
-.footer__logo-mark {
-  width: 40px; height: 40px;
-  background: var(--color-primary);
+.footer__logo-img-wrap {
+  width: 48px; height: 48px;
   border-radius: 10px;
+  background: #FFFFFF;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  padding: 3px;
 }
 
-.footer__logo-mark::before {
-  content: '';
-  position: absolute;
-  width: 22px; height: 14px;
-  border: 2.5px solid #FFFFFF;
-  border-radius: 2px;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.footer__logo-mark::after {
-  content: '';
-  position: absolute;
-  width: 14px; height: 2.5px;
-  background: #FFFFFF;
-  top: calc(50% + 7px);
-  left: 50%;
-  transform: translateX(-50%);
+.footer__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
 }
 
 .footer__logo-name {
@@ -1199,3 +1189,172 @@ body[lang="ar"] .footer__nav-title { letter-spacing: 0; }
   .specs__table tbody td { padding: 12px 10px; }
   .specs__flute-badge { width: 30px; height: 30px; font-size: 0.85rem; }
 }
+
+/* =========================================================
+   CLIENTS & PARTNERS MARQUEE SECTION
+   ========================================================= */
+
+/* ── Section shell ── */
+.clients {
+  background: var(--color-bg-alt);
+  padding: 80px 0 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.clients::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+}
+
+/* ── Logo card (shared by marquee + static grid) ── */
+.clients__logo-card {
+  flex-shrink: 0;
+  width: 160px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.clients__logo-card:hover {
+  transform: translateY(-3px);
+}
+
+.clients__logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  /* Subtle desaturation by default → full color on hover */
+  filter: grayscale(40%) opacity(0.82);
+  transition: filter 0.3s ease;
+}
+
+.clients__logo-card:hover .clients__logo-img {
+  filter: grayscale(0%) opacity(1);
+}
+
+/* ── Marquee outer wrapper ── */
+.clients__marquee-outer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Extra vertical breathing room */
+  padding: 12px 0 16px;
+}
+
+/* ── Fade gradient edges ── */
+.clients__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.clients__fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--color-bg-alt) 0%, transparent 100%);
+}
+
+.clients__fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--color-bg-alt) 0%, transparent 100%);
+}
+
+/* In RTL the fades semantically mirror but the gradient direction stays visual-left / visual-right */
+html[dir="rtl"] .clients__fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--color-bg-alt) 0%, transparent 100%);
+}
+html[dir="rtl"] .clients__fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--color-bg-alt) 0%, transparent 100%);
+}
+
+/* ── Scrolling track ── */
+.clients__marquee-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: marquee-ltr 38s linear infinite;
+}
+
+/* LTR: scrolls to the left (translateX negative) */
+@keyframes marquee-ltr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* RTL: scrolls to the right (translateX positive) */
+.clients__marquee-track--rtl {
+  animation-name: marquee-rtl;
+}
+
+@keyframes marquee-rtl {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* ── Reduced-motion static grid ── */
+.clients__static-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* ── Responsive overrides ── */
+@media (max-width: 768px) {
+  .clients {
+    padding: 64px 0 56px;
+  }
+
+  .clients__logo-card {
+    width: 130px;
+    border-radius: 10px;
+  }
+
+  .clients__marquee-track {
+    gap: 16px;
+    /* Slightly faster on small screens so it still feels alive */
+    animation-duration: 28s;
+  }
+
+  .clients__fade {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clients {
+    padding: 48px 0 40px;
+  }
+
+  .clients__logo-card {
+    width: 110px;
+    border-radius: 8px;
+  }
+
+  .clients__marquee-track {
+    gap: 12px;
+    animation-duration: 22s;
+  }
+
+  .clients__fade {
+    width: 48px;
+  }
+}
+

@@ -16,8 +16,29 @@ export function LanguageProvider({ children }) {
   });
 
   const setLang = (newLang) => {
-    setLangState(newLang);
-    localStorage.setItem(LANG_KEY, newLang);
+    if (newLang === lang) return;
+
+    // Smooth cross-fade: fade out → swap → fade in
+    const root = document.getElementById('root');
+    if (root) {
+      root.classList.add('lang-transitioning');
+      root.classList.remove('lang-transition-in');
+
+      setTimeout(() => {
+        setLangState(newLang);
+        localStorage.setItem(LANG_KEY, newLang);
+
+        // After React re-renders, fade back in
+        requestAnimationFrame(() => {
+          root.classList.remove('lang-transitioning');
+          root.classList.add('lang-transition-in');
+          setTimeout(() => root.classList.remove('lang-transition-in'), 200);
+        });
+      }, 180);
+    } else {
+      setLangState(newLang);
+      localStorage.setItem(LANG_KEY, newLang);
+    }
   };
 
   // Apply dir and lang attributes to <html> element

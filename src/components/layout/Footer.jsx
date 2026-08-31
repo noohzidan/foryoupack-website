@@ -51,18 +51,29 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="footer__brand">
-            <Link to="/" className="footer__logo" aria-label="ForYouPack">
-              <div className="footer__logo-mark" aria-hidden="true" />
-              <span className="footer__logo-name">ForYouPack</span>
+            <Link to="/" className="footer__logo" aria-label={isRTL ? 'فوريو للكرتون — الرئيسية' : 'For You Carton — Home'}>
+              <div className="footer__logo-img-wrap" aria-hidden="true">
+                <img
+                  src="/images/logo/logo.jpg"
+                  alt={isRTL ? 'شعار شركة فوريو للكرتون' : 'For You Carton Company Logo'}
+                  className="footer__logo-img"
+                  width="48"
+                  height="48"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span className="footer__logo-name">{t('logoName')}</span>
             </Link>
+
             <p className="footer__desc">{t('footerDesc')}</p>
             <div className="footer__contact-mini">
-              <a href="mailto:info@foryoupack.com" className="footer__contact-item">
+              <a href="mailto:sales@foryoucarton.com" className="footer__contact-item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                info@foryoupack.com
+                sales@foryoucarton.com
               </a>
               <a href="tel:+201024889292" className="footer__contact-item" dir="ltr">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -104,8 +115,7 @@ export default function Footer() {
                 <span>{t('footerWaPrefix')}</span> 01024993313
               </a>
             </li>
-            <li><a href="mailto:info@foryoupack.com" className="footer__nav-link" dir="ltr">info@foryoupack.com</a></li>
-            <li><a href="mailto:sales@foryoupack.com" className="footer__nav-link" dir="ltr">sales@foryoupack.com</a></li>
+            <li><a href="mailto:sales@foryoucarton.com" className="footer__nav-link" dir="ltr">sales@foryoucarton.com</a></li>
           </FooterAccordion>
 
           {/* Location */}
@@ -120,9 +130,9 @@ export default function Footer() {
               </p>
             </li>
             <li style={{ marginTop: '12px' }}>
-              <a href="https://www.foryoupack.com"
+              <a href="https://www.foryoucarton.com"
                 style={{ fontSize: '0.83rem', color: 'var(--color-primary)', fontWeight: 600 }}>
-                www.foryoupack.com
+                www.foryoucarton.com
               </a>
             </li>
           </FooterAccordion>

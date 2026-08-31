@@ -50,10 +50,10 @@ export default function Contact() {
     },
     {
       id: 'mail-gen',
-      href: 'mailto:info@foryoupack.com',
+      href: 'mailto:sales@foryoucarton.com',
       iconClass: 'contact__info-card-icon--mail',
       labelKey: 'contactEmailGenLabel',
-      value: 'info@foryoupack.com',
+      value: 'sales@foryoucarton.com',
       subKey: 'contactEmailGenSub',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -64,10 +64,10 @@ export default function Contact() {
     },
     {
       id: 'mail-sales',
-      href: 'mailto:sales@foryoupack.com',
+      href: 'mailto:sales@foryoucarton.com',
       iconClass: 'contact__info-card-icon--mail',
       labelKey: 'contactEmailSalesLabel',
-      value: 'sales@foryoupack.com',
+      value: 'sales@foryoucarton.com',
       subKey: 'contactEmailSalesSub',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
