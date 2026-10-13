@@ -51,7 +51,7 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="footer__brand">
-            <Link to="/" className="footer__logo" aria-label={isRTL ? 'فوريو للكرتون — الرئيسية' : 'For You Carton — Home'}>
+            <Link to="/" className="footer__logo" aria-label={isRTL ? 'شركة فوريو للكرتون — الرئيسية' : 'For You Carton — Home'}>
               <div className="footer__logo-img-wrap" aria-hidden="true">
                 <img
                   src="/images/logo/logo.jpg"
@@ -75,17 +75,23 @@ export default function Footer() {
                 </svg>
                 sales@foryoucarton.com
               </a>
+              <a href="tel:+201287365399" className="footer__contact-item" dir="ltr">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                +201287365399
+              </a>
               <a href="tel:+201024889292" className="footer__contact-item" dir="ltr">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
-                01024889292
+                +201024889292
               </a>
               <a href="tel:+201024993313" className="footer__contact-item" dir="ltr">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
-                01024993313
+                +201024993313
               </a>
             </div>
           </div>
@@ -95,7 +101,6 @@ export default function Footer() {
             <li><Link to="/" className="footer__nav-link">{t('navHome')}</Link></li>
             <li><a href="/#about" className="footer__nav-link">{t('navAbout')}</a></li>
             <li><a href="/#products" className="footer__nav-link">{t('navProducts')}</a></li>
-            <li><a href="/#industries" className="footer__nav-link">{t('navIndustries')}</a></li>
             <li><a href="/#specifications" className="footer__nav-link">{t('navSpecs')}</a></li>
             <li><Link to="/request-quote" className="footer__nav-link">{t('navGetQuote')}</Link></li>
             <li><Link to="/contact" className="footer__nav-link">{t('navContact')}</Link></li>
@@ -104,15 +109,21 @@ export default function Footer() {
           {/* Contact */}
           <FooterAccordion titleKey="footerContactTitle">
             <li>
+              <a href="https://wa.me/201287365399" className="footer__nav-link"
+                target="_blank" rel="noopener noreferrer" dir="ltr">
+                <span>{t('footerWaPrefix')}</span> +201287365399
+              </a>
+            </li>
+            <li>
               <a href="https://wa.me/201024889292" className="footer__nav-link"
                 target="_blank" rel="noopener noreferrer" dir="ltr">
-                <span>{t('footerWaPrefix')}</span> 01024889292
+                <span>{t('footerWaPrefix')}</span> +201024889292
               </a>
             </li>
             <li>
               <a href="https://wa.me/201024993313" className="footer__nav-link"
                 target="_blank" rel="noopener noreferrer" dir="ltr">
-                <span>{t('footerWaPrefix')}</span> 01024993313
+                <span>{t('footerWaPrefix')}</span> +201024993313
               </a>
             </li>
             <li><a href="mailto:sales@foryoucarton.com" className="footer__nav-link" dir="ltr">sales@foryoucarton.com</a></li>

@@ -8,10 +8,10 @@ export default function WhatsAppFloat() {
       <div className="whatsapp-float__tooltip">{t('waTip')}</div>
       <a
         className="whatsapp-float__btn"
-        href="https://wa.me/201024889292"
+        href="https://wa.me/201287365399"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp — 01024889292"
+        aria-label="Chat on WhatsApp — +201287365399"
         id="waFloatBtn"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

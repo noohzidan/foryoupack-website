@@ -16,7 +16,7 @@ export function ThemeProvider({ children }) {
   };
 
   const toggleTheme = () => {
-    const next = theme === 'dark' ? 'blue' : 'dark';
+    const next = theme === 'dark' ? 'light' : 'dark';
     document.documentElement.classList.add('theme-transitioning');
     setTheme(next);
     setTimeout(() => {

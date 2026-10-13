@@ -40,16 +40,6 @@ const getDropdownItems = (t) => ({
   products: [
     { labelKey: 'navProductsSingle',  href: '/#products' },
     { labelKey: 'navProductsDouble',  href: '/#products' },
-    { labelKey: 'navProductsHeavy',   href: '/#products' },
-    { labelKey: 'navProductsDieCut',  href: '/#products' },
-  ],
-  industries: [
-    { labelKey: 'navIndustriesFood',     href: '/#industries' },
-    { labelKey: 'navIndustriesWater',    href: '/#industries' },
-    { labelKey: 'navIndustriesAgri',     href: '/#industries' },
-    { labelKey: 'navIndustriesGlass',    href: '/#industries' },
-    { labelKey: 'navIndustriesOil',      href: '/#industries' },
-    { labelKey: 'navIndustriesCookware', href: '/#industries' },
   ],
 });
 
@@ -89,8 +79,8 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null); // 'about' | 'products' | 'industries' | null
-  const [mobileExpanded, setMobileExpanded] = useState({}); // { about: bool, products: bool, industries: bool }
+  const [openDropdown, setOpenDropdown] = useState(null); // 'about' | 'products' | null
+  const [mobileExpanded, setMobileExpanded] = useState({}); // { about: bool, products: bool }
   const location = useLocation();
   const headerRef = useRef(null);
   const hoverTimerRef = useRef(null);
@@ -145,7 +135,6 @@ export default function Header() {
     { key: 'home',       labelKey: 'navHome',       href: '/',               dropdown: null },
     { key: 'about',      labelKey: 'navAbout',      href: '/#about',         dropdown: 'about' },
     { key: 'products',   labelKey: 'navProducts',   href: '/#products',      dropdown: 'products' },
-    { key: 'industries', labelKey: 'navIndustries', href: '/#industries',    dropdown: 'industries' },
     { key: 'specs',      labelKey: 'navSpecs',      href: '/#specifications', dropdown: null },
     { key: 'contact',    labelKey: 'navContact',    href: '/contact',        dropdown: null }, // plain link per spec
   ];
@@ -157,7 +146,7 @@ export default function Header() {
           <div className="header__inner">
 
             {/* Logo — real image */}
-            <Link to="/" className="logo" aria-label={isRTL ? 'فوريو للكرتون — الرئيسية' : 'For You Carton — Home'}>
+            <Link to="/" className="logo" aria-label={isRTL ? 'شركة فوريو للكرتون — الرئيسية' : 'For You Carton — Home'}>
               <div className="logo__img-wrap" aria-hidden="true">
                 <img
                   src="/images/logo/logo.jpg"
