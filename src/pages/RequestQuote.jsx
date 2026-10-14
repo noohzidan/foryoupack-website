@@ -3,40 +3,149 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/ui/AnimatedSection';
 import { useLanguage } from '../context/LanguageContext';
+import { SECTORS } from '../shared/sectors';
 
 const WHATSAPP_NUMBER = '201287365399';
+const WHATSAPP_DISPLAY = '+201287365399';
 
-function buildWhatsAppMessage(lang, data) {
-  if (lang === 'ar') {
-    return `السلام عليكم،\nاسمي: ${data.name}\nالشركة/المصنع: ${data.company}\nرقم الهاتف: ${data.phone}\nالقطاع: ${data.industry}\nتفاصيل الطلب:\n${data.message}`;
-  }
-  return `Hello,\nName: ${data.name}\nCompany/Factory: ${data.company}\nPhone: ${data.phone}\nIndustry: ${data.industry}\nOrder Details:\n${data.message}`;
+/* Mirrors the server-side rules in api/quote.js. The server is the authority;
+ * these exist so the visitor gets feedback without a round trip. */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^[0-9+ -]{8,20}$/; // literal space — \s would allow CR/LF
+
+const EMPTY = { name: '', company: '', phone: '', sector: '', message: '', email: '' };
+
+/** Validate locally; returns a map of field → i18n key. */
+function validate(values) {
+  const errors = {};
+  if (!values.name.trim()) errors.name = 'errName';
+  if (!values.company.trim()) errors.company = 'errCompany';
+
+  const phone = values.phone.trim();
+  if (!phone || !PHONE_RE.test(phone)) errors.phone = 'errPhone';
+
+  if (!values.sector) errors.sector = 'errSector';
+  if (!values.message.trim()) errors.message = 'errMessage';
+
+  const email = values.email.trim();
+  if (email && !EMAIL_RE.test(email)) errors.email = 'errEmail';
+
+  return errors;
 }
+
+const SpinnerIcon = () => (
+  <svg className="form-spinner" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="3" opacity="0.25" />
+    <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+  </svg>
+);
 
 export default function RequestQuote() {
   const { t, lang } = useLanguage();
-  const [form, setForm] = useState({ name: '', company: '', phone: '', industry: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
-  const formRef = useRef(null);
+
+  const [form, setForm] = useState(EMPTY);
+  const [honeypot, setHoneypot] = useState('');
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [errorKind, setErrorKind] = useState('generic'); // generic | rate_limited
+  const [confirmationSent, setConfirmationSent] = useState(false);
+
+  const renderedAtRef = useRef(Date.now());
+  const statusRef = useRef(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
+  /* Move focus to the result so screen readers announce it. */
+  useEffect(() => {
+    if (status === 'success' || status === 'error') statusRef.current?.focus();
+  }, [status]);
+
   const handleChange = (e) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    // Clear a field's error as soon as the visitor edits it.
+    setErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send via WhatsApp
-    const msg = encodeURIComponent(buildWhatsAppMessage(lang, form));
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
-    setSubmitted(true);
+    if (status === 'sending') return;
+
+    const found = validate(form);
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      document.getElementById(`req-${Object.keys(found)[0]}`)?.focus();
+      return;
+    }
+
+    setStatus('sending');
+
+    try {
+      const res = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          company: form.company.trim(),
+          phone: form.phone.trim(),
+          sector: form.sector,
+          message: form.message.trim(),
+          email: form.email.trim(),
+          lang,
+          website: honeypot,              // honeypot — must stay empty
+          renderedAt: renderedAtRef.current,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.ok) {
+        setConfirmationSent(Boolean(data.confirmationSent));
+        setStatus('success');
+        setForm(EMPTY);
+        setHoneypot('');
+        renderedAtRef.current = Date.now();
+        return;
+      }
+
+      // Server-side field errors (client validation should have caught these).
+      if (res.status === 400 && data.fields) {
+        const mapped = {};
+        for (const key of Object.keys(data.fields)) {
+          mapped[key] = `err${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+        }
+        setErrors(mapped);
+      }
+
+      setErrorKind(res.status === 429 ? 'rate_limited' : 'generic');
+      setStatus('error');
+    } catch {
+      /* Network failure, or the site is being served somewhere without the
+       * serverless runtime (e.g. the VPS preview). Input is preserved so the
+       * visitor can retry or fall back to WhatsApp. */
+      setErrorKind('generic');
+      setStatus('error');
+    }
   };
 
-  const industries = [
-    { key: 'formInd1' }, { key: 'formInd2' }, { key: 'formInd3' },
-    { key: 'formInd4' }, { key: 'formInd5' }, { key: 'formInd6' }, { key: 'formInd7' },
-  ];
+  const fieldProps = (name) => ({
+    id: `req-${name}`,
+    name,
+    value: form[name],
+    onChange: handleChange,
+    'aria-invalid': errors[name] ? 'true' : undefined,
+    'aria-describedby': errors[name] ? `req-${name}-error` : undefined,
+    className: `${name === 'message' ? 'form-textarea' : name === 'sector' ? 'form-select' : 'form-input'}${errors[name] ? ' form-control--invalid' : ''}`,
+  });
+
+  const errorText = (name) => errors[name] && (
+    <p className="form-error" id={`req-${name}-error`} role="alert">{t(errors[name])}</p>
+  );
 
   return (
     <main id="main-content" style={{ paddingTop: 72 }}>
@@ -71,8 +180,8 @@ export default function RequestQuote() {
       <div className="quote-page__body">
         <div className="container">
           <AnimatedSection className="quote-page__form-wrap">
-            {submitted ? (
-              <div style={{ textAlign: 'center', padding: '32px 0' }}>
+            {status === 'success' ? (
+              <div className="form-status form-status--success" role="status" aria-live="polite" tabIndex={-1} ref={statusRef}>
                 <div style={{
                   width: 72, height: 72,
                   background: 'var(--color-primary-subtle)',
@@ -86,15 +195,20 @@ export default function RequestQuote() {
                   </svg>
                 </div>
                 <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: 12 }}>
-                  {lang === 'ar' ? 'تم تجهيز طلبك!' : 'Request Prepared!'}
+                  {t('quoteSuccessTitle')}
                 </h2>
-                <p style={{ color: 'var(--color-text-secondary)', marginBottom: 28 }}>
-                  {lang === 'ar'
-                    ? 'يرجى إرسال الرسالة عبر واتساب لإتمام طلبك. سنرد عليك في أقرب وقت ممكن.'
-                    : 'Please send the message via WhatsApp to complete your inquiry. We\'ll get back to you as soon as possible.'}
+                <p style={{ color: 'var(--color-text-secondary)', marginBottom: confirmationSent ? 8 : 28 }}>
+                  {t('quoteSuccessBody')}
                 </p>
+                {confirmationSent && (
+                  <p style={{ color: 'var(--color-text-secondary)', marginBottom: 28 }}>
+                    {t('quoteSuccessEmailSent')} <span dir="ltr">{form.email}</span>
+                    <br />
+                    <span style={{ fontSize: '0.9rem', opacity: 0.85 }}>{t('quoteSuccessEmailHint')}</span>
+                  </p>
+                )}
                 <Link to="/" className="btn btn--primary">
-                  {lang === 'ar' ? 'العودة للرئيسية' : 'Back to Home'}
+                  {t('navHome')}
                 </Link>
               </div>
             ) : (
@@ -102,39 +216,49 @@ export default function RequestQuote() {
                 <h2 className="contact__form-title">{t('quoteFormTitle')}</h2>
                 <p className="contact__form-sub">{t('quoteFormSub')}</p>
 
-                <form ref={formRef} onSubmit={handleSubmit} noValidate>
+                <form onSubmit={handleSubmit} noValidate>
+                  {/* Honeypot — hidden from humans and assistive tech, never focusable. */}
+                  <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+                    <label htmlFor="req-website">Website</label>
+                    <input
+                      id="req-website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
+
                   <div className="form-row">
                     <div className="form-group">
                       <label className="form-label" htmlFor="req-name">
                         {t('formName')} <span className="form-required">*</span>
                       </label>
                       <input
-                        id="req-name"
-                        name="name"
+                        {...fieldProps('name')}
                         type="text"
-                        className="form-input"
                         placeholder={t('formNamePh')}
-                        value={form.name}
-                        onChange={handleChange}
                         required
+                        maxLength={120}
                         autoComplete="name"
                       />
+                      {errorText('name')}
                     </div>
                     <div className="form-group">
                       <label className="form-label" htmlFor="req-company">
                         {t('formCompany')} <span className="form-required">*</span>
                       </label>
                       <input
-                        id="req-company"
-                        name="company"
+                        {...fieldProps('company')}
                         type="text"
-                        className="form-input"
                         placeholder={t('formCompanyPh')}
-                        value={form.company}
-                        onChange={handleChange}
                         required
+                        maxLength={120}
                         autoComplete="organization"
                       />
+                      {errorText('company')}
                     </div>
                   </div>
 
@@ -144,36 +268,44 @@ export default function RequestQuote() {
                         {t('formPhone')} <span className="form-required">*</span>
                       </label>
                       <input
-                        id="req-phone"
-                        name="phone"
+                        {...fieldProps('phone')}
                         type="tel"
                         dir="ltr"
-                        className="form-input"
                         placeholder={t('formPhonePh')}
-                        value={form.phone}
-                        onChange={handleChange}
                         required
+                        maxLength={30}
                         autoComplete="tel"
                       />
+                      {errorText('phone')}
                     </div>
                     <div className="form-group">
-                      <label className="form-label" htmlFor="req-industry">
+                      <label className="form-label" htmlFor="req-sector">
                         {t('formIndustry')} <span className="form-required">*</span>
                       </label>
-                      <select
-                        id="req-industry"
-                        name="industry"
-                        className="form-select"
-                        value={form.industry}
-                        onChange={handleChange}
-                        required
-                      >
+                      <select {...fieldProps('sector')} required>
                         <option value="" disabled>{t('formIndustryDefault')}</option>
-                        {industries.map((ind) => (
-                          <option key={ind.key} value={t(ind.key)}>{t(ind.key)}</option>
+                        {SECTORS.map((s) => (
+                          <option key={s.key} value={s.key}>{t(s.i18nKey)}</option>
                         ))}
                       </select>
+                      {errorText('sector')}
                     </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="req-email">
+                      {t('formEmail')}
+                    </label>
+                    <input
+                      {...fieldProps('email')}
+                      type="email"
+                      dir="ltr"
+                      placeholder={t('formEmailPh')}
+                      maxLength={254}
+                      autoComplete="email"
+                    />
+                    <p className="form-hint">{t('formEmailHint')}</p>
+                    {errorText('email')}
                   </div>
 
                   <div className="form-group">
@@ -181,23 +313,57 @@ export default function RequestQuote() {
                       {t('formMessage')} <span className="form-required">*</span>
                     </label>
                     <textarea
-                      id="req-message"
-                      name="message"
-                      className="form-textarea"
+                      {...fieldProps('message')}
                       placeholder={t('formMessagePh')}
-                      value={form.message}
-                      onChange={handleChange}
                       required
+                      maxLength={3000}
                       rows={5}
                     />
+                    {errorText('message')}
                   </div>
 
+                  {status === 'error' && (
+                    <div className="form-status form-status--error" role="alert" tabIndex={-1} ref={statusRef}>
+                      <p style={{ fontWeight: 700, marginBottom: 6 }}>{t('quoteErrorTitle')}</p>
+                      <p style={{ marginBottom: 14 }}>
+                        {errorKind === 'rate_limited' ? t('quoteErrorRateLimit') : t('quoteErrorBody')}
+                      </p>
+                      <a
+                        href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="form-whatsapp"
+                        style={{ display: 'inline-flex' }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style={{ width: 18, height: 18 }}>
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        <span>{t('quoteChatWhatsapp')} — <span dir="ltr">{WHATSAPP_DISPLAY}</span></span>
+                      </a>
+                    </div>
+                  )}
+
                   <div className="form-actions">
-                    <button type="submit" className="btn btn--primary form-submit" id="quoteSubmitBtn">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18 }}>
-                        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                      </svg>
-                      <span>{t('formSubmit')}</span>
+                    <button
+                      type="submit"
+                      className="btn btn--primary form-submit"
+                      id="quoteSubmitBtn"
+                      disabled={status === 'sending'}
+                      aria-busy={status === 'sending'}
+                    >
+                      {status === 'sending' ? (
+                        <>
+                          <SpinnerIcon />
+                          <span>{t('formSending')}</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18 }}>
+                            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                          </svg>
+                          <span>{t('formSubmit')}</span>
+                        </>
+                      )}
                     </button>
                     <a
                       href={`https://wa.me/${WHATSAPP_NUMBER}`}

@@ -168,6 +168,53 @@ const translations = {
     formWhatsapp:      'WhatsApp',
     backToHome:        '← Back to Home',
 
+    /* Optional email field */
+    formEmail:         'Email',
+    formEmailPh:       'name@example.com',
+    formEmailHint:     'Optional — to receive a confirmation email',
+
+    /* Client-side validation */
+    errName:           'Please enter your full name',
+    errCompany:        'Please enter your company or factory name',
+    errPhone:          'Please enter a valid phone number',
+    errSector:         'Please select your industry sector',
+    errMessage:        'Please enter your order details',
+    errEmail:          'Please enter a valid email address',
+
+    /* Submit states */
+    formSending:       'Sending…',
+    quoteSuccessTitle: 'Request sent!',
+    quoteSuccessBody:  'Thank you — we received your request and will reply within 24 hours.',
+    quoteSuccessEmailSent: 'We sent a confirmation to:',
+    quoteSuccessEmailHint: 'Please check your spam folder if you do not see it.',
+    quoteErrorTitle:   'Could not send your request',
+    quoteErrorBody:    'Something went wrong while sending. You can try again, or reach us directly on WhatsApp.',
+    quoteErrorRateLimit: 'Too many requests from your device. Please try again later, or reach us on WhatsApp.',
+    quoteRetry:        'Try again',
+    quoteChatWhatsapp:'Chat on WhatsApp',
+
+    /* Notification email — sent to sales, always Arabic */
+    quoteNewRequestIntro: 'A new quote request was submitted from the website.',
+    quoteMetaEmail:    'Customer email',
+    quoteMetaNoEmail:  'Not provided',
+    quoteMetaLang:     'Visitor language',
+    quoteMetaLangAr:   'Arabic',
+    quoteMetaLangEn:   'English',
+    quoteMetaTime:     'Submitted at',
+    quoteMetaTimeZone: 'Cairo time',
+    quoteReplyWa:      'Reply on WhatsApp',
+    quoteAutoNote:     'This is an automatic message from the For You Carton website.',
+
+    /* Confirmation email — sent to the customer */
+    confirmSubject:    'We received your quote request — For You Carton',
+    confirmHeading:    'Request received',
+    confirmGreeting:   'Hello',
+    confirmBodyReceived: 'We have received your quote request and it is now being reviewed.',
+    confirmBodyTimeline: 'We will get back to you within 24 hours.',
+    confirmBodyContact:  'To reach us directly:',
+    confirmBodyStamp:    'Received at:',
+    confirmAutoNote:     'This is an automatic message, please do not reply.',
+
     /* Footer */
     footerDesc:        'For You Carton Company LLC — A leading Egyptian manufacturer of corrugated cardboard cartons for various industries since 2017. Sadat City, Menofia, Egypt.',
     footerNavTitle:    'Quick Links',
@@ -352,6 +399,53 @@ const translations = {
     formSubmit:        'إرسال الطلب',
     formWhatsapp:      'واتساب',
     backToHome:        '→ العودة للرئيسية',
+
+    /* Optional email field */
+    formEmail:         'البريد الإلكتروني',
+    formEmailPh:       'name@example.com',
+    formEmailHint:     'اختياري — لتصلك رسالة تأكيد',
+
+    /* Client-side validation */
+    errName:           'يرجى إدخال الاسم الكامل',
+    errCompany:        'يرجى إدخال اسم الشركة أو المصنع',
+    errPhone:          'يرجى إدخال رقم هاتف صحيح',
+    errSector:         'يرجى اختيار القطاع الصناعي',
+    errMessage:        'يرجى إدخال تفاصيل الطلب',
+    errEmail:          'يرجى إدخال بريد إلكتروني صحيح',
+
+    /* Submit states */
+    formSending:       'جارٍ الإرسال…',
+    quoteSuccessTitle: 'تم إرسال طلبك!',
+    quoteSuccessBody:  'شكرًا لك، تم استلام طلبك وسنرد عليك خلال 24 ساعة.',
+    quoteSuccessEmailSent: 'أرسلنا رسالة تأكيد إلى:',
+    quoteSuccessEmailHint: 'يرجى مراجعة مجلد الرسائل غير المرغوب فيها (Spam) إذا لم تجدها.',
+    quoteErrorTitle:   'تعذّر إرسال الطلب',
+    quoteErrorBody:    'حدث خطأ أثناء الإرسال. يمكنك المحاولة مرة أخرى، أو التواصل معنا مباشرة عبر واتساب.',
+    quoteErrorRateLimit: 'تم إرسال عدد كبير من الطلبات من جهازك. يرجى المحاولة لاحقًا أو التواصل عبر واتساب.',
+    quoteRetry:        'إعادة المحاولة',
+    quoteChatWhatsapp:'تواصل عبر واتساب',
+
+    /* Notification email — sent to sales, always Arabic */
+    quoteNewRequestIntro: 'تم استلام طلب عرض سعر جديد من الموقع.',
+    quoteMetaEmail:    'بريد العميل',
+    quoteMetaNoEmail:  'لم يُدخَل',
+    quoteMetaLang:     'لغة الزائر',
+    quoteMetaLangAr:   'العربية',
+    quoteMetaLangEn:   'الإنجليزية',
+    quoteMetaTime:     'وقت الإرسال',
+    quoteMetaTimeZone: 'توقيت القاهرة',
+    quoteReplyWa:      'الرد عبر واتساب',
+    quoteAutoNote:     'هذه رسالة آلية من موقع شركة فوريو للكرتون.',
+
+    /* Confirmation email — sent to the customer */
+    confirmSubject:    'تم استلام طلب عرض السعر — شركة فوريو للكرتون',
+    confirmHeading:    'تم استلام طلبك',
+    confirmGreeting:   'مرحبًا',
+    confirmBodyReceived: 'تم استلام طلب عرض السعر الخاص بك، وهو الآن قيد المراجعة.',
+    confirmBodyTimeline: 'سنقوم بالرد عليك خلال 24 ساعة.',
+    confirmBodyContact:  'للتواصل السريع:',
+    confirmBodyStamp:    'وقت الاستلام:',
+    confirmAutoNote:     'هذه رسالة آلية، يرجى عدم الرد عليها.',
 
     /* Footer */
     footerDesc:        'شركة فوريو للكرتون ذات مسئولية محدودة — شركة رائدة في تصنيع كراتين التغليف المموج للصناعات المصرية منذ 2017. مدينة السادات، المنوفية، مصر.',

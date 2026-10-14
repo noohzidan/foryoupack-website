@@ -708,6 +708,58 @@ html[dir="rtl"] .form-select {
 .form-whatsapp:hover { background: #20B958; transform: translateY(-2px); }
 .form-whatsapp svg { width: 18px; height: 18px; flex-shrink: 0; }
 
+/* Quote form — hints, inline validation, submit status and loading */
+.form-hint {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.form-error {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #EF4444;
+  line-height: 1.5;
+}
+
+.form-control--invalid,
+.form-control--invalid:focus {
+  border-color: #EF4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.form-status { outline: none; }
+
+.form-status--success { text-align: center; padding: 32px 0; }
+
+.form-status--error {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  text-align: start;
+}
+
+.form-submit:disabled { opacity: 0.75; cursor: not-allowed; }
+
+.form-spinner {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  animation: form-spin 0.7s linear infinite;
+}
+
+@keyframes form-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-spinner { animation-duration: 2.4s; }
+}
+
 /* =========================================================
    FOOTER
    ========================================================= */
