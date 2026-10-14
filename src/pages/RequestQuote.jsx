@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import AnimatedSection from '../components/ui/AnimatedSection';
 import { useLanguage } from '../context/LanguageContext';
 import { SECTORS } from '../shared/sectors';
 
@@ -179,7 +178,12 @@ export default function RequestQuote() {
       {/* Form body */}
       <div className="quote-page__body">
         <div className="container">
-          <AnimatedSection className="quote-page__form-wrap">
+          {/* Deliberately not an <AnimatedSection>: the form is the whole point of
+              this page, so it must never depend on a scroll-triggered animation
+              firing to become visible. It rendered at opacity 0 until an
+              IntersectionObserver callback landed, which left the page looking
+              blank on first load. */}
+          <div className="quote-page__form-wrap">
             {status === 'success' ? (
               <div className="form-status form-status--success" role="status" aria-live="polite" tabIndex={-1} ref={statusRef}>
                 <div style={{
@@ -217,8 +221,26 @@ export default function RequestQuote() {
                 <p className="contact__form-sub">{t('quoteFormSub')}</p>
 
                 <form onSubmit={handleSubmit} noValidate>
-                  {/* Honeypot — hidden from humans and assistive tech, never focusable. */}
-                  <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+                  {/* Honeypot — hidden from humans and assistive tech, never focusable.
+                      Clipped in place rather than pushed to left:-9999px: an element
+                      parked off-screen still counts toward the document's scrollable
+                      width, which gave the page ~10000px of horizontal scroll and let
+                      it slide sideways out of centre. */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: 'absolute',
+                      width: 1,
+                      height: 1,
+                      padding: 0,
+                      margin: -1,
+                      overflow: 'hidden',
+                      clip: 'rect(0 0 0 0)',
+                      clipPath: 'inset(50%)',
+                      whiteSpace: 'nowrap',
+                      border: 0,
+                    }}
+                  >
                     <label htmlFor="req-website">Website</label>
                     <input
                       id="req-website"
@@ -381,7 +403,7 @@ export default function RequestQuote() {
                 </form>
               </>
             )}
-          </AnimatedSection>
+          </div>
 
           {/* Alternative contact cards below form */}
           <div className="quote-page__cta-cards">
